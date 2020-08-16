@@ -1,0 +1,98 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 21.11.2019 12:47:41
+// Design Name: 
+// Module Name: testbench
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module testbench;
+
+wire [15:0]decrypt,encrypt;
+wire [31:0] gpowa,gpowak;
+
+reg [31:0] message;
+reg clk;
+
+
+
+
+elgamal elg (clk,  decrypt);
+reg help;
+initial begin 
+help=0;
+end
+
+
+
+//selectmessage sm(s1,s2,s3,s4,message);
+reg[31:0] a,g,q,k;
+
+initial begin
+assign a = 5;
+assign g = 3;
+assign k = 4;
+assign q = 7;
+assign message=6;
+end
+
+wire newclk;
+assign newclk=clk& help;
+wire [31:0] count,count1, counter1,gpowk,counter2;
+modulopower z(clk,g, a,q, gpowa,count);
+modulopower x (clk, g, k, q,gpowk ,counter2);
+modulopower y(newclk,gpowa, k, q ,gpowak,counter1);
+
+
+ //bob b (newclk,gpowak, message,q, encrypt);
+
+initial begin
+
+clk=1;
+/*
+#20 clk = 0;#20
+clk=1;#20
+clk = 0;#20
+clk=1;#20
+clk = 0;#20
+clk=1;#20
+clk = 0;#20
+clk=1;#20
+clk = 0;#20
+clk=1;#20
+clk = 0;#20
+clk=1;#20
+clk = 0;#20
+clk=1;#20
+clk = 0;#20
+clk=1;#20
+clk = 0;*/
+#1000000000
+$finish;
+end
+
+always
+begin
+#1 clk = ~clk;
+if(count>=a)
+help=1;
+
+//message = message + 36;
+
+end
+    
+endmodule
